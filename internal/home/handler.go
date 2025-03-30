@@ -6,14 +6,14 @@ type HomeHandler struct {
 	router fiber.Router
 }
 
+func (h *HomeHandler) home(c *fiber.Ctx) error {
+	return c.SendString("Start")
+}
+
 func NewHandler(router fiber.Router) {
 	h := &HomeHandler{
 		router: router,
 	}
 
 	h.router.Get("/", h.home)
-}
-
-func (h *HomeHandler) home(c *fiber.Ctx) error {
-	return c.SendString("Start")
 }
