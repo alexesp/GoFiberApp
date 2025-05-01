@@ -1,9 +1,6 @@
 package home
 
 import (
-	"bytes"
-	"text/template"
-
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/log"
 )
@@ -15,18 +12,29 @@ type HomeHandler struct {
 func (h *HomeHandler) home(c *fiber.Ctx) error {
 	//panic("panic")
 	//tmpl, err := template.New("test").Parse("{{.Count}} - numero de usuarios")
-	tmpl := template.Must(template.ParseFiles("./html/page.html"))
-	data := struct{ Count int }{Count: 1}
+	//tmpl := template.Must(template.ParseFiles("./html/page.html"))
+	//data := struct{ Count int }{Count: 1}
 	//if err != nil {
 	//return fiber.NewError(fiber.StatusBadRequest, "Template error")
 	//}
-	var tpl bytes.Buffer
-	if err := tmpl.Execute(&tpl, data); err != nil {
-		return fiber.NewError(fiber.StatusBadRequest, "Template error")
-	}
-	c.Set(fiber.HeaderContentType, fiber.MIMETextHTML)
-	return c.Send(tpl.Bytes())
+	// var tpl bytes.Buffer
+	// if err := tmpl.Execute(&tpl, data); err != nil {
+	// 	return fiber.NewError(fiber.StatusBadRequest, "Template error")
+	// }
+	// c.Set(fiber.HeaderContentType, fiber.MIMETextHTML)
+	// return c.Send(tpl.Bytes())
 	//return c.SendString("Start")
+	data := struct {
+		Count   int
+		IsAdmin bool
+	}{
+		Count:   10,
+		IsAdmin: false,
+	}
+	return c.Render("page", data)
+	// return c.Render("page", fiber.Map{
+	// 	"Count": 5,
+	// })
 }
 func (h *HomeHandler) error(c *fiber.Ctx) error {
 	log.Info("Info")
