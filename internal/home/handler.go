@@ -3,6 +3,7 @@ package home
 import (
 	"github.com/alexesp/FiberWebApp/pkg/tadapter"
 	"github.com/alexesp/FiberWebApp/views"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/log"
 )
@@ -37,7 +38,7 @@ func (h *HomeHandler) home(c *fiber.Ctx) error {
 	// return c.Render("page", fiber.Map{
 	// 	"Count": 5,
 	// })
-	component := views.Hello("Hello Fiber")
+	component := views.Main()
 	//component.Render(context.Background(), os.Stdout)
 
 	//return c.SendString("Test template")
@@ -57,9 +58,10 @@ func NewHandler(router fiber.Router) {
 		router: router,
 	}
 
-	api := h.router.Group("/api")
+	//api := h.router.Group("/api")
 
-	//h.router.Get("/", h.home)
-	api.Get("/", h.home)
-	api.Get("/error", h.error)
+	h.router.Get("/", h.home)
+	h.router.Get("/404", h.error)
+	//api.Get("/", h.home)
+	//api.Get("/error", h.error)
 }
