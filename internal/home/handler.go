@@ -1,6 +1,8 @@
 package home
 
 import (
+	"github.com/alexesp/FiberWebApp/pkg/tadapter"
+	"github.com/alexesp/FiberWebApp/views"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/log"
 )
@@ -24,17 +26,22 @@ func (h *HomeHandler) home(c *fiber.Ctx) error {
 	// c.Set(fiber.HeaderContentType, fiber.MIMETextHTML)
 	// return c.Send(tpl.Bytes())
 	//return c.SendString("Start")
-	data := struct {
-		Count   int
-		IsAdmin bool
-	}{
-		Count:   10,
-		IsAdmin: false,
-	}
-	return c.Render("page", data)
+	// data := struct {
+	// 	Count   int
+	// 	IsAdmin bool
+	// }{
+	// 	Count:   10,
+	// 	IsAdmin: false,
+	// }
+	//return c.Render("page", data)
 	// return c.Render("page", fiber.Map{
 	// 	"Count": 5,
 	// })
+	component := views.Hello("Hello Fiber")
+	//component.Render(context.Background(), os.Stdout)
+
+	//return c.SendString("Test template")
+	return tadapter.Render(c, component)
 }
 func (h *HomeHandler) error(c *fiber.Ctx) error {
 	log.Info("Info")
